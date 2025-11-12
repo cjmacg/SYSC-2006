@@ -22,7 +22,23 @@
  */
 list_t *list_construct(int capacity)
 {
-    list_t *list = NULL;
+    assert(capacity > 0); // check that capacity is greater than nothing.
+
+    list_t *list; //initialize list pointer
+    list = malloc(sizeof(list_t)); //allocate the struct to the heap
+    assert(list != NULL); //good practice
+
+    int* pc = malloc(sizeof(int) * capacity); //make the backing array with specified capacity
+    assert(pc != NULL); //check the latest pointer
+    for(int i = 0; i < capacity; i++) {
+        pc[i] = 0;
+    }
+
+
+    list->elems =pc;
+    list->capacity = capacity;
+    list->size = 0;
+
     return list;
 }
 
@@ -34,6 +50,7 @@ list_t *list_construct(int capacity)
 void list_destroy(list_t *list)
 {
     assert(list != NULL);
+
     free(list->elems);  /* Return the array to the heap. */
     free(list);         /* Return the structure to the heap. */
 }
@@ -74,7 +91,16 @@ void list_print(const list_t *list)
  */
 _Bool list_append(list_t *list, int element)
 {
-    return false;
+    assert(list != NULL); //first check the list pointer poits somewhere
+    assert(list->elems != NULL);
+
+    if (list->size < list->capacity) { //check that the list still has room for appending
+        list->elems[list->size] = element; //index elems according to size,
+        list->size++; //gotta make sure size increments, forgot this at first.
+        //since size should be index of next available empty spot
+        return true; //does so if append successful
+    }
+    else return false;
 }
 
 /* Return the maximum number of integers that can be stored in the list 
@@ -84,7 +110,11 @@ _Bool list_append(list_t *list, int element)
  */
 int list_capacity(const list_t *list)
 {
-        return -1;
+    assert(list != NULL);
+    assert(list->elems != NULL);
+
+    return list->capacity;
+    return -1;
 }
 
 /* Return the number of integers in the list pointed to by parameter list.
@@ -93,6 +123,10 @@ int list_capacity(const list_t *list)
  */
 int list_size(const list_t *list)
 {
+    assert(list != NULL);
+    assert(list->elems != NULL);
+
+    return list->size;
     return -1;
 }
 
@@ -104,9 +138,13 @@ int list_size(const list_t *list)
  */
 int list_get(const list_t *list, int index)
 {
+    assert(list != NULL);
+    assert(list->elems != NULL);
+
+    assert(index >= 0 && index < list->size);
+    return list->elems[index];
     return -1;
 }
-
 /* Store element at the specified index, in the list pointed to by 
  * parameter list. Return the integer that was previously 
  * stored at that index.
@@ -116,6 +154,14 @@ int list_get(const list_t *list, int index)
  */
 int list_set(list_t *list, int index, int element)
 {
+    assert(list != NULL);
+    assert(list->elems != NULL);
+
+    assert(index >= 0 && index < list->size);
+    int holder = list->elems[index];
+    list->elems[index] = element;
+
+    return holder;
     return -1;
 }
 
@@ -127,6 +173,13 @@ int list_set(list_t *list, int index, int element)
  */
 void list_removeall(list_t *list)
 {
+    assert(list != NULL);
+    assert(list->elems != NULL);
+
+    for(int i = 0; i < list->size; i++) {
+        list->elems[i] = 0;
+    }
+    list->size = 0;
 }
 
 /* Return the index (position) of the first occurrence of an integer
@@ -137,7 +190,15 @@ void list_removeall(list_t *list)
  */
 int list_index(const list_t *list, int target)
 {
-    return -2;
+    assert(list != NULL);
+    assert(list->elems != NULL);
+
+    for(int i = 0; i < list->size; i++) {
+        if(list->elems[i] == target) {
+            return i;
+        }
+    }
+    return -1;
 }
 
 /* Count the number of integers that are equal to target, in the list 
@@ -147,7 +208,16 @@ int list_index(const list_t *list, int target)
  */
 int list_count(const list_t *list, int target)
 {
-    return -1;
+    assert(list != NULL);
+    assert(list->elems != NULL);
+
+    int count = 0;
+    for(int i = 0; i < list->size; i++) {
+        if(list->elems[i] == target) {
+            count++;
+        }
+    }
+    return count;
 }
 
 /* Determine if an integer in the list pointed to by parameter list 
@@ -158,5 +228,12 @@ int list_count(const list_t *list, int target)
  */
 _Bool list_contains(const list_t *list, int target)
 {
+    assert(list != NULL);
+    assert(list->elems != NULL);
+    for(int i = 0; i < list->size; i++) {
+        if(list->elems[i] == target) {
+            return true;
+        }
+    }
     return false;
 }
