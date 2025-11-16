@@ -1,0 +1,1 @@
+/usr/bin/cc CMakeFiles/lab8.dir/lab8/main.c.o CMakeFiles/lab8.dir/lab8/array_list.c.o CMakeFiles/lab8.dir/lab8/my_string.c.o -o lab8 

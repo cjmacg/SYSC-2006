@@ -1,0 +1,4 @@
+/mnt/c/Users/Cameron/Documents/Coding/build/CMakeFiles/lab8.dir
+/mnt/c/Users/Cameron/Documents/Coding/build/CMakeFiles/lab9.dir
+/mnt/c/Users/Cameron/Documents/Coding/build/CMakeFiles/edit_cache.dir
+/mnt/c/Users/Cameron/Documents/Coding/build/CMakeFiles/rebuild_cache.dir
