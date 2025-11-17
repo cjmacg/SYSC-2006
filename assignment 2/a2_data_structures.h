@@ -1,9 +1,11 @@
 /********* a1_data_structures.h ********
 	
-	Student Name 	= 
-	Student Number	= 
+	Student Name 	= Cameron MacGillivray
+	Student Number	= 101354857
 */
 
+#ifndef A2_DATA_STRUCTURES_H
+#define A2_DATA_STRUCTURES_H
 
 #include <stdbool.h>
 
@@ -32,3 +34,4 @@ typedef struct project {
     _Bool completed;
 }project_t;
 
+#endif /* A2_DATA_STRUCTURES_H */
