@@ -12,6 +12,7 @@
  */
 void print_term(term_t *term)
 {
+    printf("%dx^%d\n", term->coeff, term->exp);
     printf("This function should print the term in the form ax^n\n");
 }
 
@@ -26,7 +27,12 @@ void print_term(term_t *term)
  */
 term_t *make_term(int coeff, int exp)
 {
-    return NULL;
+    term_t *term = malloc(sizeof(term_t));
+    assert(term != NULL);
+    term->coeff = coeff;
+    assert(term->coeff != 0);
+    term->exp = exp;
+    return term; //forgot to change this from NULL originally
 }
 
 /* Return the value of a polynomial term; i.e., return ax^n for a term with
@@ -36,7 +42,10 @@ term_t *make_term(int coeff, int exp)
  */
 double eval_term(term_t *term, double x)
 {
-    return 0;
+    //don't know if I need to cast to double somewhere below
+    //I assume that's handled by return type.
+    //I think pow is allowed considering math.h is already included.
+    return term->coeff * pow(x,(term->exp));
 }
 
 /* Make a polynomial that has 0 terms and return the pointer to the polynomial. 
@@ -48,7 +57,10 @@ double eval_term(term_t *term, double x)
  */
 polynomial_t *make_polynomial(void)
 {
-    return NULL;
+    polynomial_t *polynomial = malloc(sizeof(polynomial_t));
+    assert(polynomial != NULL);
+    polynomial->num_terms = 0;
+    return polynomial;
 }
 
 /* Add a term to a polynomial.
@@ -63,6 +75,11 @@ polynomial_t *make_polynomial(void)
  */
 void add_term(polynomial_t *poly, term_t *term)
 {
+    assert(poly->num_terms != MAX_TERMS);
+    //poly structs terms is termpointer array indexable to largest new entry, which is entry num terms
+    //so sets address of termpointer array entry to param term pointer to set
+    poly->terms[poly->num_terms] = term;
+    poly->num_terms++; //increase term count by one
 }
 
 /* Return the value of a polynomial when it is evaluated at x.
@@ -71,5 +88,11 @@ void add_term(polynomial_t *poly, term_t *term)
  */
 double eval_polynomial(polynomial_t *poly, double x)
 {
-    return 0;
+    assert(poly->num_terms != 0);
+    double result = 0;
+    //doesn't use walking pointer, but should be good?
+    for (int i = 0; i < poly->num_terms; i++) {
+        result += eval_term(poly->terms[i], x);
+    }
+    return result;
 }
