@@ -24,6 +24,18 @@ target_include_directories(lab9 PRIVATE
         ${CMAKE_CURRENT_SOURCE_DIR}/lab9
 )
 
+
+#--------------Lab 10 ---------------------------
+add_executable(lab10
+        lab10/main.c
+        lab10/singly_linked_list.c
+)
+target_include_directories(lab10 PRIVATE
+        ${CMAKE_CURRENT_SOURCE_DIR}/lab10
+)
+
+
+
 # ---------- Assignment 2: test runner ----------
 add_executable(a2_tests
         "assignment 2/main_tests.c"
