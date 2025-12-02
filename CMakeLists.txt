@@ -35,6 +35,33 @@ target_include_directories(lab10 PRIVATE
 )
 
 
+#--------------Lab 11 ---------------------------
+add_executable(lab11
+        lab11/main.c
+        lab11/sl_list.c
+)
+target_include_directories(lab11 PRIVATE
+        ${CMAKE_CURRENT_SOURCE_DIR}/lab11
+)
+
+#--------------Lab 12 ---------------------------
+add_executable(lab12
+        lab12/main.c
+        lab12/circular_queue.c
+)
+target_include_directories(lab12 PRIVATE
+        ${CMAKE_CURRENT_SOURCE_DIR}/lab12
+)
+
+#--------------Lab 13 ---------------------------
+add_executable(lab13
+        lab13/main.c
+        lab13/dictionary.c
+)
+target_include_directories(lab13 PRIVATE
+        ${CMAKE_CURRENT_SOURCE_DIR}/lab13
+)
+
 
 # ---------- Assignment 2: test runner ----------
 add_executable(a2_tests

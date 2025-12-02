@@ -7,6 +7,7 @@
 
 #include "sl_list.h"
 
+
 /*************************************************************
  * Functions presented in lectures.
  *************************************************************/
@@ -92,6 +93,21 @@ void print_list(intnode_t *head)
 
 intnode_t *add(intnode_t *head, int elem, int index)
 {
+
+    assert(index >= 0 && index <= length(head));
+
+    //handles list being empty, as well as putting at front of list (push)
+    if (index == 0) {
+        return intnode_construct(elem, head);
+    }
+
+    intnode_t *current = head;
+    for (int i = 0; i < (index-1); i++) {
+        current = current->next;
+    }
+
+    current->next = intnode_construct(elem, current->next);
+
     return head;
 }
 
@@ -99,6 +115,21 @@ intnode_t *add(intnode_t *head, int elem, int index)
 
 void every_other(intnode_t *head)
 {
+    if (head == NULL) {
+        return; //this is the alternative to doing no assert, and it returns nothing since void.
+    }
+
+
+    intnode_t *current = head;
+    while (current != NULL && current->next != NULL) {
+        intnode_t *toDelete = current->next;
+        current->next = toDelete->next;
+        //free the address that won't be used, good practice methinks
+        free(toDelete);
+
+        //the actual loop iteration
+        current = current->next;
+    }
 }
 
 // Exercise 3
@@ -108,7 +139,21 @@ void every_other(intnode_t *head)
  */
 int count_in_sll(intnode_t *head, int target)
 {
-    return -1;
+    //first base case
+    if (head == NULL) {
+        return 0;
+    }
+
+    //recursion here, calling itself
+    int count_int_remaining = count_in_sll(head->next, target);
+
+    //current step
+    if (head->value == target) {
+        return count_int_remaining + 1;
+    }
+    else {
+        return count_int_remaining;
+    }
 }
 
 // Exercise 4
@@ -116,7 +161,17 @@ int count_in_sll(intnode_t *head, int target)
 /* Return the last element in the linked list pointed to by head.
  * Terminate (via assert) if the list is empty.
  */
-int last_in_sll(intnode_t *head)
-{
-    return 0;
+int last_in_sll(intnode_t *head) {
+    //rather than base case, we assert
+    assert(head != NULL);
+
+    intnode_t *current = head;
+
+    //base case, returns the value of the entry
+    if (current->next == NULL) {
+        return current->value;
+    }
+
+    //recursive case
+    return last_in_sll(current->next);
 }

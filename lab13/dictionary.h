@@ -26,4 +26,10 @@ typedef entry_t *dict_t;
 dict_t *make_dictionary(void);
 char *get(dict_t *dict, char *key);
 void put(dict_t *dict, char *key, char *value);
+
+void print_dictionary(dict_t *dict);
+
+_Bool replace(dict_t *dict, char *key, char *value);
+void clear(dict_t *dict);
+
 #endif

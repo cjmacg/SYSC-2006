@@ -1,4 +1,4 @@
-#ifndef __CIRCULAR_QUEUE_H__
+    #ifndef __CIRCULAR_QUEUE_H__
 #define __CIRCULAR_QUEUE_H__
 /* SYSC 2006 Lab 12
  *
@@ -25,6 +25,7 @@ typedef struct
                   // queue's linked list
     int size;     // The # of nodes in the queue's linked list
 } queue_t;
+
 
 queue_t *alloc_queue(void);
 _Bool queue_is_empty(const queue_t *queue);

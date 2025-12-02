@@ -40,5 +40,23 @@ int main(void)
     put(addresses, "Babak", "babak@sce.carleton.ca");
     printf("Email for Babak is now %s\n", get(addresses, "Babak"));
 
+
+    print_dictionary(addresses);
+    // Exercise 2 Tests
+    printf("Testing replace:\n");
+    _Bool result = replace(addresses, "Babak", "new_email@example.com");
+    printf("Result for existing key (Babak): %d (Expected: 1)\n", result);
+
+    result = replace(addresses, "Ghost", "boo");
+    printf("Result for missing key (Ghost): %d (Expected: 0)\n", result);
+
+    printf("Dictionary after replace:\n");
+    print_dictionary(addresses);
+
+    // Exercise 3 Tests
+    printf("\nTesting clear:\n");
+    clear(addresses);
+    printf("Dictionary after clear (Should be all NULL):\n");
+    print_dictionary(addresses);
     return EXIT_SUCCESS;
 }

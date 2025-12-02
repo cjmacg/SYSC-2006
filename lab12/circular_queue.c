@@ -87,6 +87,33 @@ void queue_print(const queue_t *queue)
  */
 void enqueue(queue_t *queue, int value)
 {
+    assert(queue != NULL);
+
+    if (queue_is_empty(queue)) {
+        node_t* newNode = malloc(sizeof(node_t));
+        assert(newNode != NULL);
+        newNode->data = value;
+        newNode->next = newNode; //point to itself as circular solo node
+        queue->rear = newNode;
+        queue->size++;
+        return;
+    }
+
+    node_t* head = queue -> rear-> next;
+
+    node_t* newNode = malloc(sizeof(node_t));
+    assert(newNode != NULL);
+    newNode->data = value;
+    newNode -> next = head;
+
+
+    queue->rear->next = newNode;
+
+    queue -> rear = newNode;
+
+
+    queue->size++;
+
 }
 
 /* Copy the value at the front of a queue to the variable pointed to by
@@ -97,8 +124,21 @@ void enqueue(queue_t *queue, int value)
  */
 _Bool front(const queue_t *queue, int *element)
 {
-    *element = -1;
-    return false;
+
+    //this kinda like a peek function?
+
+    assert(queue != NULL);
+
+    //can't return a front value is there ain't none
+    if (queue_is_empty(queue)) {
+        return false;
+    }
+
+    //head can simple be found by next of end circular list
+    node_t* head = queue->rear->next;
+    //access head element
+    *element = head->data;
+    return true;
 }
 
 /* Copy the value at the front of a queue to the variable pointed to by
@@ -109,6 +149,31 @@ _Bool front(const queue_t *queue, int *element)
  */
 _Bool dequeue(queue_t *queue, int *element)
 {
-    *element = -1;
-    return false;
+    assert(queue != NULL);
+
+    if (queue_is_empty(queue)) {
+        return false;
+    }
+
+    //make note of old head so we can free it later.
+    node_t* oldHead = queue->rear->next;
+
+    //access old head's data and give it to element pointer's value
+    *element = oldHead->data;
+
+
+    //this is if there's just one node (ie. single circular)
+    if (queue -> rear == oldHead) {
+        queue->rear = NULL;
+    }
+    //this is if more than just one node, normal handling
+    else {
+        //basically skip oldHead and go to the second entry from original
+        queue->rear->next = oldHead->next;
+    }
+
+    free(oldHead); //cleaner way to free than I originally did too early
+
+    queue->size--;
+    return true;
 }
